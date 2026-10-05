@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — CLAUDE.md seção 6. Contraste verificado pela fórmula da WCAG; não alterar sem recalcular.
+ * A paleta padrão do Tailwind é removida (--color-*: initial): só existe cor via token semântico.
+ * Tema escolhido por data-tema no <html> (RA05, UC12).
+ */
+@theme {
+  --color-*: initial;
+  --color-bg: #FFFFFF;
+  --color-surface: #F5F6F8;
+  --color-border-subtle: #D9DDE3;       /* decorativo; NUNCA em campo ou controle (1.36:1) */
+  --color-border-interactive: #767F8C;  /* 4.05:1 */
+  --color-text: #1A1D23;                /* 16.88:1 */
+  --color-text-muted: #5A6270;          /* 6.15:1 */
+  --color-primary: #3B49DF;             /* 6.55:1 */
+  --color-primary-hover: #2E3AB8;
+  --color-on-primary: #FFFFFF;          /* texto sobre --color-primary: mesmo par 6.55:1 */
+  --color-success: #1E7B34;             /* 5.33:1 */
+  --color-warning: #96590A;             /* 5.63:1 */
+  --color-danger: #C0261F;              /* 5.94:1 */
+
+  --font-titulo: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-texto: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.5;
+
+  --radius-sm: 0.375rem;  /* 6px */
+  --radius-md: 0.625rem;  /* 10px */
+  --radius-lg: 1rem;      /* 16px */
+}
+
+[data-tema="escuro"] {
+  --color-bg: #12141A;
+  --color-surface: #1C2029;
+  --color-border-subtle: #2E343F;
+  --color-border-interactive: #66707E;  /* 3.67:1 */
+  --color-text: #EEF1F6;                /* 16.26:1 */
+  --color-text-muted: #A3ACBA;          /* 8.04:1 */
+  --color-primary: #8A94FF;             /* 6.80:1 */
+  --color-primary-hover: #8A94FF;       /* ponytail: sem hover verificado no escuro; hover usa sublinhado/anel */
+  --color-on-primary: #12141A;          /* texto sobre o primário claro: mesmo par 6.80:1 */
+  --color-success: #4ADE80;             /* 10.56:1 */
+  --color-warning: #F2B44D;             /* 10.00:1 */
+  --color-danger: #FF6B60;              /* 6.60:1 */
+}
+
+/* Alto contraste: o fundo é #FFFFFF, igual ao tema claro, então success/warning/danger herdam os valores verificados dele. */
+[data-tema="alto-contraste"] {
+  --color-bg: #FFFFFF;
+  --color-surface: #FFFFFF;
+  --color-border-subtle: #000000;
+  --color-border-interactive: #000000;  /* 21:1 */
+  --color-text: #000000;                /* 21:1 */
+  --color-text-muted: #000000;
+  --color-primary: #0000CC;             /* 11.22:1 */
+  --color-primary-hover: #0000CC;
+  --color-on-primary: #FFFFFF;
+}
+
+html {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-texto);
+}
+
+/* RA02: foco sempre visível, em todo elemento focável. */
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* RA06: respeita a preferência do sistema; a preferência salva do usuário entra via data-reduzir-animacoes. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+[data-reduzir-animacoes="true"] *, [data-reduzir-animacoes="true"] *::before, [data-reduzir-animacoes="true"] *::after {
+  animation-duration: 0.01ms !important; transition-duration: 0.01ms !important;
+}
