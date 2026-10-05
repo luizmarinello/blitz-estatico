@@ -6,4 +6,5 @@ const url = import.meta.env.VITE_SUPABASE_URL
 const chave = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
 if (!url || !chave) throw new Error('Configure VITE_SUPABASE_URL e VITE_SUPABASE_PUBLISHABLE_KEY no .env.local (veja .env.example).')
 
-export const supabase = createClient(url, chave)
+// pkce: o link de recuperação volta com ?code=, que o cliente troca sozinho por uma sessão (RF03)
+export const supabase = createClient(url, chave, { auth: { flowType: 'pkce' } })
