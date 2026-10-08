@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 // Roteamento por caminho (history API). Não é por hash porque o link de recuperação do Supabase
 // volta com ?code=... na URL, e isso conflita com rotas em #.
-// BASE: '' em desenvolvimento, '/blitz' no GitHub Pages (vite.config.ts). As telas só conhecem '/login' etc.
+// BASE: '' em desenvolvimento, '/blitz-estatico' no GitHub Pages (vite.config.ts). As telas só conhecem '/login' etc.
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '')
 
 export const href = (caminho: string) => BASE + caminho

@@ -4,7 +4,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  // GitHub Pages publica em luizmarinello.github.io/blitz/ (workflow .github/workflows/pages.yml)
-  base: process.env.GITHUB_PAGES ? '/blitz/' : '/',
+  // GitHub Pages publica em luizmarinello.github.io/blitz-estatico/ (workflow .github/workflows/pages.yml)
+  base: process.env.GITHUB_PAGES ? '/blitz-estatico/' : '/',
   server: { port: 3000, strictPort: true },   // 3000 = Site URL padrão do Supabase Auth
 })
