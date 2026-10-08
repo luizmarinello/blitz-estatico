@@ -1,5 +1,5 @@
 import { useId, type ButtonHTMLAttributes, type InputHTMLAttributes, type MouseEvent, type ReactNode } from 'react'
-import { navegar } from '../lib/rota'
+import { href, navegar } from '../lib/rota'
 
 // Componentes base. Todos com foco visível (regra global :focus-visible em index.css, RA02)
 // e bordas de controle com --color-border-interactive, nunca a subtle (1.4.11).
@@ -45,7 +45,7 @@ export function Link({ para, children }: { para: string; children: ReactNode }) 
     e.preventDefault()
     navegar(para)
   }
-  return <a href={para} onClick={ir} className="text-primary underline">{children}</a>
+  return <a href={href(para)} onClick={ir} className="text-primary underline">{children}</a>
 }
 
 // RA07: o tipo do aviso aparece escrito ("Erro:", "Pronto:"), não só pela cor.

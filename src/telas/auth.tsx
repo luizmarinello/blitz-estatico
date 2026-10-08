@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from 'react'
 import { supabase } from '../lib/supabase'
 import { mensagemDeErro } from '../lib/erros'
-import { navegar } from '../lib/rota'
+import { href, navegar, urlAbsoluta } from '../lib/rota'
 import { Aviso, Botao, Campo, CartaoAuth, Link } from '../ui/componentes'
 
 export const VERSAO_POLITICA = '1.0'   // a versão gravada vem do banco; esta só é exibida e precisa acompanhar
@@ -65,7 +65,7 @@ export function Cadastro() {
       email: d.email.trim(),
       password: d.senha,
       // aceita_termos é conferido de novo pelo gatilho do banco: sem ele, a conta não é criada
-      options: { data: { nome: d.nome.trim(), aceita_termos: true }, emailRedirectTo: location.origin },
+      options: { data: { nome: d.nome.trim(), aceita_termos: true }, emailRedirectTo: urlAbsoluta('/') },
     })
     setCarregando(false)
     if (error) return setErros({ geral: mensagemDeErro(error) })
@@ -97,7 +97,7 @@ export function Cadastro() {
           <input id="aceitaTermos" name="aceitaTermos" type="checkbox" className="mt-1 size-5 accent-primary"
                  aria-invalid={erros.aceite ? true : undefined} aria-describedby={erros.aceite ? 'aceite-erro' : undefined} />
           <label htmlFor="aceitaTermos" className="text-text">
-            Li e aceito os <a href="/termos" target="_blank" className="text-primary underline">Termos de Uso e a Política de Privacidade<span className="sr-only"> (abre em nova aba)</span></a> (versão {VERSAO_POLITICA}).
+            Li e aceito os <a href={href('/termos')} target="_blank" className="text-primary underline">Termos de Uso e a Política de Privacidade<span className="sr-only"> (abre em nova aba)</span></a> (versão {VERSAO_POLITICA}).
             Registramos data, hora e versão deste aceite.
           </label>
         </div>
@@ -131,7 +131,7 @@ export function Recuperar() {
     const d = dadosDo(e)
     if (!/^\S+@\S+\.\S+$/.test(d.email.trim())) return setErro('Informe um e-mail válido.')
     setCarregando(true)
-    const { error } = await supabase.auth.resetPasswordForEmail(d.email.trim(), { redirectTo: `${location.origin}/redefinir` })
+    const { error } = await supabase.auth.resetPasswordForEmail(d.email.trim(), { redirectTo: urlAbsoluta('/redefinir') })
     setCarregando(false)
     if (error) return setErro(mensagemDeErro(error))
     setEnviado(true)
